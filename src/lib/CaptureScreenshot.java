@@ -29,7 +29,7 @@ public class CaptureScreenshot {
     
     File source= ts.getScreenshotAs(OutputType.FILE);
     
-    String ruta= "C:\\workspace\\RimacClaimVidaTest\\Reportes\\ScreenShots"+"-"+fecha+"\\"+TestCaptura+"-"+hora+".png";
+    String ruta= "C:\\workspace\\Repo\\Reportes\\ScreenShots"+"-"+fecha+"\\"+TestCaptura+"-"+hora+".png";
     
     File destino= new File (ruta);
     
