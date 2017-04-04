@@ -1,4 +1,4 @@
-package cp_Rimac_Claim_Vida;
+package test;
 
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;

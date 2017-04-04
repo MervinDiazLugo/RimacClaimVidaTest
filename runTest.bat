@@ -1,3 +1,3 @@
-cd C:\workspace\RimacClaimVidaTest
-set classpath=C:\workspace\RimacClaimVidaTest\librerias\all\*;C:\workspace\RimacClaimVidaTest\bin;
-java org.testng.TestNG C:\workspace\RimacClaimVidaTest\testng.xml
+cd C:\workspace\Repo
+set classpath=C:\workspace\Repo\librerias\all\*;C:\workspace\Repo\bin;
+java org.testng.TestNG C:\workspace\Repo\testng.xml
