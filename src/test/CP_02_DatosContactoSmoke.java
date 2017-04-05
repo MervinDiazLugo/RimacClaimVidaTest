@@ -185,10 +185,6 @@ public class CP_02_DatosContactoSmoke  {
     EscribirExcel.WriteData(0, 3, 13, Msj);
     EscribirExcel.WriteData(0, 5, 13, Msj);
     
-    ScreenShot_Path= "<img src="+ CaptureScreenshot.ScreenShot(driver, TestCaptura) + ">"; 
-    TestBPM.log(LogStatus.INFO, "Agregar Datos de Contacto Finalizo Correctamente", ScreenShot_Path);
-    
-
 	
   }
  

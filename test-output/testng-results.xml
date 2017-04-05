@@ -1,196 +1,82 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testng-results skipped="0" failed="0" ignored="0" total="9" passed="9">
+<testng-results skipped="0" failed="1" total="2" passed="1">
   <reporter-output>
   </reporter-output>
-  <suite name="Suite" duration-ms="378747" started-at="2017-04-03T19:40:08Z" finished-at="2017-04-03T19:46:27Z">
+  <suite name="Suite" duration-ms="77491" started-at="2017-04-04T20:08:57Z" finished-at="2017-04-04T20:10:15Z">
     <groups>
     </groups>
-    <test name="Test" duration-ms="378747" started-at="2017-04-03T19:40:08Z" finished-at="2017-04-03T19:46:27Z">
-      <class name="cp_Rimac_Claim_Vida.CP_05_DatosCobertura">
-        <test-method status="PASS" signature="setUp()[pri:0, instance:cp_Rimac_Claim_Vida.CP_05_DatosCobertura@7e0babb1]" name="setUp" is-config="true" duration-ms="9533" started-at="2017-04-03T16:44:00Z" finished-at="2017-04-03T16:44:10Z">
+    <test name="Test" duration-ms="77491" started-at="2017-04-04T20:08:57Z" finished-at="2017-04-04T20:10:15Z">
+      <class name="test.CP_02_DatosContactoSmoke">
+        <test-method status="PASS" signature="setUp()[pri:0, instance:test.CP_02_DatosContactoSmoke@d8355a8]" name="setUp" is-config="true" duration-ms="9775" started-at="2017-04-04T17:08:57Z" finished-at="2017-04-04T17:09:07Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- setUp -->
-        <test-method status="PASS" signature="T06_DatosCobertura()[pri:0, instance:cp_Rimac_Claim_Vida.CP_05_DatosCobertura@7e0babb1]" name="T06_DatosCobertura" duration-ms="39099" started-at="2017-04-03T16:44:10Z" finished-at="2017-04-03T16:44:49Z">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- T06_DatosCobertura -->
-        <test-method status="PASS" signature="tearDown(org.testng.ITestResult)[pri:0, instance:cp_Rimac_Claim_Vida.CP_05_DatosCobertura@7e0babb1]" name="tearDown" is-config="true" duration-ms="355" started-at="2017-04-03T16:44:49Z" finished-at="2017-04-03T16:44:49Z">
-          <params>
-            <param index="0">
-              <value>
-                <![CDATA[[TestResult name=T06_DatosCobertura status=SUCCESS method=CP_05_DatosCobertura.T06_DatosCobertura()[pri:0, instance:cp_Rimac_Claim_Vida.CP_05_DatosCobertura@7e0babb1] output={null}]]]>
-              </value>
-            </param>
-          </params>
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- tearDown -->
-        <test-method status="PASS" signature="tearDown()[pri:0, instance:cp_Rimac_Claim_Vida.CP_05_DatosCobertura@7e0babb1]" name="tearDown" is-config="true" duration-ms="860" started-at="2017-04-03T16:44:49Z" finished-at="2017-04-03T16:44:50Z">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- tearDown -->
-      </class> <!-- cp_Rimac_Claim_Vida.CP_05_DatosCobertura -->
-      <class name="cp_Rimac_Claim_Vida.CP_00_IniciarTarea">
-        <test-method status="PASS" signature="setUp()[pri:0, instance:cp_Rimac_Claim_Vida.CP_00_IniciarTarea@66d33a]" name="setUp" is-config="true" duration-ms="5847" started-at="2017-04-03T16:40:08Z" finished-at="2017-04-03T16:40:14Z">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- setUp -->
-        <test-method status="PASS" signature="T00_InicializarTarea()[pri:0, instance:cp_Rimac_Claim_Vida.CP_00_IniciarTarea@66d33a]" name="T00_InicializarTarea" duration-ms="38604" started-at="2017-04-03T16:40:14Z" finished-at="2017-04-03T16:40:53Z">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- T00_InicializarTarea -->
-        <test-method status="PASS" signature="tearDown(org.testng.ITestResult)[pri:0, instance:cp_Rimac_Claim_Vida.CP_00_IniciarTarea@66d33a]" name="tearDown" is-config="true" duration-ms="347" started-at="2017-04-03T16:40:53Z" finished-at="2017-04-03T16:40:53Z">
-          <params>
-            <param index="0">
-              <value>
-                <![CDATA[[TestResult name=T00_InicializarTarea status=SUCCESS method=CP_00_IniciarTarea.T00_InicializarTarea()[pri:0, instance:cp_Rimac_Claim_Vida.CP_00_IniciarTarea@66d33a] output={null}]]]>
-              </value>
-            </param>
-          </params>
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- tearDown -->
-        <test-method status="PASS" signature="tearDown()[pri:0, instance:cp_Rimac_Claim_Vida.CP_00_IniciarTarea@66d33a]" name="tearDown" is-config="true" duration-ms="1014" started-at="2017-04-03T16:40:53Z" finished-at="2017-04-03T16:40:54Z">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- tearDown -->
-      </class> <!-- cp_Rimac_Claim_Vida.CP_00_IniciarTarea -->
-      <class name="cp_Rimac_Claim_Vida.CP_12_DatosBeneficiarioSiniestro">
-        <test-method status="PASS" signature="setUp()[pri:0, instance:cp_Rimac_Claim_Vida.CP_12_DatosBeneficiarioSiniestro@5ba23b66]" name="setUp" is-config="true" duration-ms="8951" started-at="2017-04-03T16:45:38Z" finished-at="2017-04-03T16:45:47Z">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- setUp -->
-        <test-method status="PASS" signature="T08_DatosBeneficiarios()[pri:0, instance:cp_Rimac_Claim_Vida.CP_12_DatosBeneficiarioSiniestro@5ba23b66]" name="T08_DatosBeneficiarios" duration-ms="38733" started-at="2017-04-03T16:45:47Z" finished-at="2017-04-03T16:46:26Z">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- T08_DatosBeneficiarios -->
-        <test-method status="PASS" signature="tearDown(org.testng.ITestResult)[pri:0, instance:cp_Rimac_Claim_Vida.CP_12_DatosBeneficiarioSiniestro@5ba23b66]" name="tearDown" is-config="true" duration-ms="499" started-at="2017-04-03T16:46:26Z" finished-at="2017-04-03T16:46:26Z">
-          <params>
-            <param index="0">
-              <value>
-                <![CDATA[[TestResult name=T08_DatosBeneficiarios status=SUCCESS method=CP_12_DatosBeneficiarioSiniestro.T08_DatosBeneficiarios()[pri:0, instance:cp_Rimac_Claim_Vida.CP_12_DatosBeneficiarioSiniestro@5ba23b66] output={null}]]]>
-              </value>
-            </param>
-          </params>
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- tearDown -->
-        <test-method status="PASS" signature="tearDown()[pri:0, instance:cp_Rimac_Claim_Vida.CP_12_DatosBeneficiarioSiniestro@5ba23b66]" name="tearDown" is-config="true" duration-ms="898" started-at="2017-04-03T16:46:26Z" finished-at="2017-04-03T16:46:27Z">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- tearDown -->
-      </class> <!-- cp_Rimac_Claim_Vida.CP_12_DatosBeneficiarioSiniestro -->
-      <class name="cp_Rimac_Claim_Vida.CP_09_DatosSiniestro">
-        <test-method status="PASS" signature="setUp()[pri:0, instance:cp_Rimac_Claim_Vida.CP_09_DatosSiniestro@6debcae2]" name="setUp" is-config="true" duration-ms="8398" started-at="2017-04-03T16:44:50Z" finished-at="2017-04-03T16:44:59Z">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- setUp -->
-        <test-method status="PASS" signature="T07_DatosSiniestro()[pri:0, instance:cp_Rimac_Claim_Vida.CP_09_DatosSiniestro@6debcae2]" name="T07_DatosSiniestro" duration-ms="16603" started-at="2017-04-03T16:44:59Z" finished-at="2017-04-03T16:45:15Z">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- T07_DatosSiniestro -->
-        <test-method status="PASS" signature="tearDown(org.testng.ITestResult)[pri:0, instance:cp_Rimac_Claim_Vida.CP_09_DatosSiniestro@6debcae2]" name="tearDown" is-config="true" duration-ms="21785" started-at="2017-04-03T16:45:15Z" finished-at="2017-04-03T16:45:37Z">
-          <params>
-            <param index="0">
-              <value>
-                <![CDATA[[TestResult name=T07_DatosSiniestro status=SUCCESS method=CP_09_DatosSiniestro.T07_DatosSiniestro()[pri:0, instance:cp_Rimac_Claim_Vida.CP_09_DatosSiniestro@6debcae2] output={null}]]]>
-              </value>
-            </param>
-          </params>
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- tearDown -->
-        <test-method status="PASS" signature="tearDown()[pri:0, instance:cp_Rimac_Claim_Vida.CP_09_DatosSiniestro@6debcae2]" name="tearDown" is-config="true" duration-ms="735" started-at="2017-04-03T16:45:37Z" finished-at="2017-04-03T16:45:38Z">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- tearDown -->
-      </class> <!-- cp_Rimac_Claim_Vida.CP_09_DatosSiniestro -->
-      <class name="cp_Rimac_Claim_Vida.CP_01_02_DatosContacto">
-        <test-method status="PASS" signature="setUp()[pri:0, instance:cp_Rimac_Claim_Vida.CP_01_02_DatosContacto@7cf10a6f]" name="setUp" is-config="true" duration-ms="8427" started-at="2017-04-03T16:40:54Z" finished-at="2017-04-03T16:41:02Z">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- setUp -->
-        <test-method status="PASS" signature="T01_AgregarDatosContacto()[pri:0, instance:cp_Rimac_Claim_Vida.CP_01_02_DatosContacto@7cf10a6f]" name="T01_AgregarDatosContacto" duration-ms="40809" started-at="2017-04-03T16:41:02Z" finished-at="2017-04-03T16:41:43Z">
+        <test-method status="PASS" signature="T01_AgregarDatosContacto()[pri:0, instance:test.CP_02_DatosContactoSmoke@d8355a8]" name="T01_AgregarDatosContacto" duration-ms="45720" started-at="2017-04-04T17:09:07Z" finished-at="2017-04-04T17:09:53Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- T01_AgregarDatosContacto -->
-        <test-method status="PASS" signature="tearDown(org.testng.ITestResult)[pri:0, instance:cp_Rimac_Claim_Vida.CP_01_02_DatosContacto@7cf10a6f]" name="tearDown" is-config="true" duration-ms="261" started-at="2017-04-03T16:41:43Z" finished-at="2017-04-03T16:41:43Z">
+        <test-method status="PASS" signature="tearDown(org.testng.ITestResult)[pri:0, instance:test.CP_02_DatosContactoSmoke@d8355a8]" name="tearDown" is-config="true" duration-ms="278" started-at="2017-04-04T17:09:53Z" finished-at="2017-04-04T17:09:53Z">
           <params>
             <param index="0">
               <value>
-                <![CDATA[[TestResult name=T01_AgregarDatosContacto status=SUCCESS method=CP_01_02_DatosContacto.T01_AgregarDatosContacto()[pri:0, instance:cp_Rimac_Claim_Vida.CP_01_02_DatosContacto@7cf10a6f] output={null}]]]>
+                <![CDATA[[TestResult name=T01_AgregarDatosContacto status=SUCCESS method=CP_02_DatosContactoSmoke.T01_AgregarDatosContacto()[pri:0, instance:test.CP_02_DatosContactoSmoke@d8355a8] output={null}]]]>
               </value>
             </param>
           </params>
           <reporter-output>
           </reporter-output>
         </test-method> <!-- tearDown -->
-        <test-method status="PASS" signature="T02_AgregarOtroDatoContacto()[pri:0, instance:cp_Rimac_Claim_Vida.CP_01_02_DatosContacto@7cf10a6f]" name="T02_AgregarOtroDatoContacto" duration-ms="32141" started-at="2017-04-03T16:41:43Z" finished-at="2017-04-03T16:42:16Z">
+        <test-method status="FAIL" signature="T02_ZAvanzarAdmitirExpediente()[pri:0, instance:test.CP_02_DatosContactoSmoke@d8355a8]" name="T02_ZAvanzarAdmitirExpediente" duration-ms="15309" started-at="2017-04-04T17:09:53Z" finished-at="2017-04-04T17:10:08Z">
+          <exception class="java.lang.NullPointerException">
+            <full-stacktrace>
+              <![CDATA[java.lang.NullPointerException
+	at test.CP_02_DatosContactoSmoke.T02_ZAvanzarAdmitirExpediente(CP_02_DatosContactoSmoke.java:207)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:80)
+	at org.testng.internal.Invoker.invokeMethod(Invoker.java:714)
+	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:901)
+	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1231)
+	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:127)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:111)
+	at org.testng.TestRunner.privateRun(TestRunner.java:767)
+	at org.testng.TestRunner.run(TestRunner.java:617)
+	at org.testng.SuiteRunner.runTest(SuiteRunner.java:334)
+	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:329)
+	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:291)
+	at org.testng.SuiteRunner.run(SuiteRunner.java:240)
+	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1198)
+	at org.testng.TestNG.runSuitesLocally(TestNG.java:1123)
+	at org.testng.TestNG.run(TestNG.java:1031)
+	at org.testng.remote.AbstractRemoteTestNG.run(AbstractRemoteTestNG.java:132)
+	at org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:236)
+	at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:81)
+]]>
+            </full-stacktrace>
+          </exception> <!-- java.lang.NullPointerException -->
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- T02_AgregarOtroDatoContacto -->
-        <test-method status="PASS" signature="tearDown(org.testng.ITestResult)[pri:0, instance:cp_Rimac_Claim_Vida.CP_01_02_DatosContacto@7cf10a6f]" name="tearDown" is-config="true" duration-ms="266" started-at="2017-04-03T16:42:16Z" finished-at="2017-04-03T16:42:16Z">
+        </test-method> <!-- T02_ZAvanzarAdmitirExpediente -->
+        <test-method status="PASS" signature="tearDown(org.testng.ITestResult)[pri:0, instance:test.CP_02_DatosContactoSmoke@d8355a8]" name="tearDown" is-config="true" duration-ms="5176" started-at="2017-04-04T17:10:08Z" finished-at="2017-04-04T17:10:13Z">
           <params>
             <param index="0">
               <value>
-                <![CDATA[[TestResult name=T02_AgregarOtroDatoContacto status=SUCCESS method=CP_01_02_DatosContacto.T02_AgregarOtroDatoContacto()[pri:0, instance:cp_Rimac_Claim_Vida.CP_01_02_DatosContacto@7cf10a6f] output={null}]]]>
+                <![CDATA[[TestResult name=T02_ZAvanzarAdmitirExpediente status=FAILURE method=CP_02_DatosContactoSmoke.T02_ZAvanzarAdmitirExpediente()[pri:0, instance:test.CP_02_DatosContactoSmoke@d8355a8] output={null}]]]>
               </value>
             </param>
           </params>
           <reporter-output>
           </reporter-output>
         </test-method> <!-- tearDown -->
-        <test-method status="PASS" signature="T03_EditarDatosContacto()[pri:0, instance:cp_Rimac_Claim_Vida.CP_01_02_DatosContacto@7cf10a6f]" name="T03_EditarDatosContacto" duration-ms="36284" started-at="2017-04-03T16:42:16Z" finished-at="2017-04-03T16:42:52Z">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- T03_EditarDatosContacto -->
-        <test-method status="PASS" signature="tearDown(org.testng.ITestResult)[pri:0, instance:cp_Rimac_Claim_Vida.CP_01_02_DatosContacto@7cf10a6f]" name="tearDown" is-config="true" duration-ms="277" started-at="2017-04-03T16:42:52Z" finished-at="2017-04-03T16:42:52Z">
-          <params>
-            <param index="0">
-              <value>
-                <![CDATA[[TestResult name=T03_EditarDatosContacto status=SUCCESS method=CP_01_02_DatosContacto.T03_EditarDatosContacto()[pri:0, instance:cp_Rimac_Claim_Vida.CP_01_02_DatosContacto@7cf10a6f] output={null}]]]>
-              </value>
-            </param>
-          </params>
+        <test-method status="PASS" signature="tearDown()[pri:0, instance:test.CP_02_DatosContactoSmoke@d8355a8]" name="tearDown" is-config="true" duration-ms="1211" started-at="2017-04-04T17:10:13Z" finished-at="2017-04-04T17:10:15Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- tearDown -->
-        <test-method status="PASS" signature="T04_EliminarDatosContacto()[pri:0, instance:cp_Rimac_Claim_Vida.CP_01_02_DatosContacto@7cf10a6f]" name="T04_EliminarDatosContacto" duration-ms="36195" started-at="2017-04-03T16:42:52Z" finished-at="2017-04-03T16:43:29Z">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- T04_EliminarDatosContacto -->
-        <test-method status="PASS" signature="tearDown(org.testng.ITestResult)[pri:0, instance:cp_Rimac_Claim_Vida.CP_01_02_DatosContacto@7cf10a6f]" name="tearDown" is-config="true" duration-ms="299" started-at="2017-04-03T16:43:29Z" finished-at="2017-04-03T16:43:29Z">
-          <params>
-            <param index="0">
-              <value>
-                <![CDATA[[TestResult name=T04_EliminarDatosContacto status=SUCCESS method=CP_01_02_DatosContacto.T04_EliminarDatosContacto()[pri:0, instance:cp_Rimac_Claim_Vida.CP_01_02_DatosContacto@7cf10a6f] output={null}]]]>
-              </value>
-            </param>
-          </params>
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- tearDown -->
-        <test-method status="PASS" signature="T05_ZAvanzarAdmitirExpediente()[pri:0, instance:cp_Rimac_Claim_Vida.CP_01_02_DatosContacto@7cf10a6f]" name="T05_ZAvanzarAdmitirExpediente" duration-ms="30272" started-at="2017-04-03T16:43:29Z" finished-at="2017-04-03T16:43:59Z">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- T05_ZAvanzarAdmitirExpediente -->
-        <test-method status="PASS" signature="tearDown(org.testng.ITestResult)[pri:0, instance:cp_Rimac_Claim_Vida.CP_01_02_DatosContacto@7cf10a6f]" name="tearDown" is-config="true" duration-ms="309" started-at="2017-04-03T16:43:59Z" finished-at="2017-04-03T16:44:00Z">
-          <params>
-            <param index="0">
-              <value>
-                <![CDATA[[TestResult name=T05_ZAvanzarAdmitirExpediente status=SUCCESS method=CP_01_02_DatosContacto.T05_ZAvanzarAdmitirExpediente()[pri:0, instance:cp_Rimac_Claim_Vida.CP_01_02_DatosContacto@7cf10a6f] output={null}]]]>
-              </value>
-            </param>
-          </params>
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- tearDown -->
-        <test-method status="PASS" signature="tearDown()[pri:0, instance:cp_Rimac_Claim_Vida.CP_01_02_DatosContacto@7cf10a6f]" name="tearDown" is-config="true" duration-ms="918" started-at="2017-04-03T16:44:00Z" finished-at="2017-04-03T16:44:00Z">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- tearDown -->
-      </class> <!-- cp_Rimac_Claim_Vida.CP_01_02_DatosContacto -->
+      </class> <!-- test.CP_02_DatosContactoSmoke -->
     </test> <!-- Test -->
   </suite> <!-- Suite -->
 </testng-results>
