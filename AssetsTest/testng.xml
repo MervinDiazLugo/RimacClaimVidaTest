@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Suite">
+  <test name="Test">
+    
+	<classes>
+	   	  <class name="test.CP_00_IniciarTarea"/>
+	      <class name="test.CP_01_02_DatosContacto"/>
+	      <class name="test.CP_05_DatosCobertura"/>
+	      <class name="test.CP_09_DatosSiniestro"/>
+	      <class name="test.CP_12_DatosBeneficiarioSiniestro"/>
+    </classes>
+      
+  </test> <!-- Test -->
+</suite> <!-- Suite -->
+
+<!-- 
+
+<class name="test.CP_01_02_DatosContacto"/>
+    
+ -->

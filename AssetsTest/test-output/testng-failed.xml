@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Failed suite [Suite]">
+  <test name="Test(failed)">
+    <classes>
+      <class name="cp_Rimac_Claim_Vida.CP_12_DatosBeneficiarioSiniestro">
+        <methods>
+          <include name="setUp"/>
+          <include name="tearDown"/>
+          <include name="tearDown"/>
+        </methods>
+      </class> <!-- cp_Rimac_Claim_Vida.CP_12_DatosBeneficiarioSiniestro -->
+      <class name="cp_Rimac_Claim_Vida.CP_00_IniciarTarea">
+        <methods>
+          <include name="setUp"/>
+          <include name="tearDown"/>
+          <include name="tearDown"/>
+          <include name="T00_InicializarTarea"/>
+        </methods>
+      </class> <!-- cp_Rimac_Claim_Vida.CP_00_IniciarTarea -->
+      <class name="cp_Rimac_Claim_Vida.CP_01_02_DatosContacto">
+        <methods>
+          <include name="T01_AgregarDatosContacto"/>
+          <include name="setUp"/>
+          <include name="T02_AgregarOtroDatoContacto"/>
+          <include name="T03_EditarDatosContacto"/>
+          <include name="T04_EliminarDatosContacto"/>
+          <include name="T05_ZAvanzarAdmitirExpediente"/>
+          <include name="tearDown"/>
+          <include name="tearDown"/>
+        </methods>
+      </class> <!-- cp_Rimac_Claim_Vida.CP_01_02_DatosContacto -->
+      <class name="cp_Rimac_Claim_Vida.CP_05_DatosCobertura">
+        <methods>
+          <include name="setUp"/>
+          <include name="tearDown"/>
+          <include name="tearDown"/>
+        </methods>
+      </class> <!-- cp_Rimac_Claim_Vida.CP_05_DatosCobertura -->
+      <class name="cp_Rimac_Claim_Vida.CP_09_DatosSiniestro">
+        <methods>
+          <include name="tearDown"/>
+          <include name="tearDown"/>
+          <include name="setUp"/>
+        </methods>
+      </class> <!-- cp_Rimac_Claim_Vida.CP_09_DatosSiniestro -->
+    </classes>
+  </test> <!-- Test(failed) -->
+</suite> <!-- Failed suite [Suite] -->
