@@ -2,6 +2,9 @@ package vistas;
 
 import java.awt.BorderLayout;
 import lib.Conectar;
+import lib.ExcelDataConfig;
+import lib.VarGlobals;
+
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -12,11 +15,14 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 import org.apache.commons.io.FileUtils;
 
+import com.sun.jna.platform.win32.Shell32;
+
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JTextField;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -26,20 +32,23 @@ import java.util.Locale;
 import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
 import java.awt.Font;
+import java.awt.Frame;
 
 public class Configuracion extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField txtNombreProject;
 	private JTextField txtPath;
-	String vID, PathReportes, PathProyecto,DataProviderPath, resp;
-	int respuesta;
+	public String vID, PathReportes, PathProyecto, resp, ExcelPath, nombreproject, ProcessCenter;
+	int respuesta, autoIncKeyFromFunc;
 	private JTextField txtProcessCenter;
 	private JTextField txtPathreportes;
 	PreparedStatement PrepararSentencias;
 	Connection conexionBD;
-	private JTextField txtDataProvider;
-
+	ExcelDataConfig EscribirConfig;
+	static Configuracion frame = new Configuracion();
+	JButton btnSetPathProyecto, btnSiguiente, btnPathReportes, btnCrearProyecto;
+	
 	/**
 	 * Launch the application.
 	 */
@@ -47,7 +56,6 @@ public class Configuracion extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Configuracion frame = new Configuracion();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -67,50 +75,6 @@ public class Configuracion extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JButton btnBuscar = new JButton("Buscar");
-		btnBuscar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				  //Consultar en BD
-		        if (txtNombreProject.getText().equals("")){
-		            JOptionPane.showMessageDialog(null,"Introduzca el ID del Proyecto","",JOptionPane.PLAIN_MESSAGE);
-		            txtNombreProject.requestFocus();
-		        }else
-
-		            try {
-		                Conectar conexionBD= new Conectar();
-		                vID= String.valueOf(txtNombreProject.getText());
-		                System.out.println(vID);
-		                String Cons="select * from testconfig where id="+(vID);
-		                ResultSet consulta=conexionBD.consulta(Cons);
-		                if(consulta.next()){
-			                txtPath.setText(consulta.getString(2));
-
-		                } else 
-		                respuesta= JOptionPane.showConfirmDialog(null, "ID de proyecto no Existe", "Confirmar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-		                if(respuesta==0){
-		              
-		                }else
-		                	txtNombreProject.requestFocus();
-		                
-		            }     catch (SQLException error)
-		              {
-		            	  error.printStackTrace();
-		                System.exit(2);
-		             
-		              } catch (ClassNotFoundException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
-
-		        
-		        
-		        
-		        
-			}
-		});
-		btnBuscar.setBounds(296, 290, 89, 23);
-		contentPane.add(btnBuscar);
-		
 		txtNombreProject = new JTextField();
 		txtNombreProject.setBounds(229, 70, 245, 22);
 		contentPane.add(txtNombreProject);
@@ -127,7 +91,8 @@ public class Configuracion extends JFrame {
 		lblNewLabel.setBounds(278, 37, 126, 22);
 		contentPane.add(lblNewLabel);
 		
-		JButton btnSetPathProyecto = new JButton("Set Path");
+		
+		btnSetPathProyecto = new JButton("Set Path");
 		btnSetPathProyecto.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
@@ -162,7 +127,7 @@ public class Configuracion extends JFrame {
 		
 		JLabel lblPathDelProyecto = new JLabel("URL Process Center");
 		lblPathDelProyecto.setFont(new Font("Arial Narrow", Font.BOLD, 14));
-		lblPathDelProyecto.setBounds(106, 209, 113, 22);
+		lblPathDelProyecto.setBounds(112, 172, 113, 22);
 		contentPane.add(lblPathDelProyecto);
 		
 		JLabel label = new JLabel("Path del Proyecto");
@@ -172,7 +137,7 @@ public class Configuracion extends JFrame {
 		
 		txtProcessCenter = new JTextField();
 		txtProcessCenter.setColumns(10);
-		txtProcessCenter.setBounds(229, 211, 341, 23);
+		txtProcessCenter.setBounds(229, 174, 341, 23);
 		contentPane.add(txtProcessCenter);
 		
 		JLabel lblNombreDelReportes = new JLabel("Path de Reportes");
@@ -186,7 +151,8 @@ public class Configuracion extends JFrame {
 		txtPathreportes.setBounds(229, 143, 245, 23);
 		contentPane.add(txtPathreportes);
 		
-		JButton btnCrearProyecto = new JButton("Crear Proyecto");
+
+		btnCrearProyecto = new JButton("Crear Proyecto");
 		btnCrearProyecto.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 		if (txtNombreProject.getText().equals("") | txtPath.getText().equals("") | txtPathreportes.getText().equals("")| txtProcessCenter.getText().equals(""))
@@ -197,33 +163,65 @@ public class Configuracion extends JFrame {
 				
 			    try {
 			        Conectar conn = new Conectar();
-			        String NuevoSt="insert into testconfig values(?,?,?,?,?,?)";
+			        String NuevoSt="insert into testconfig values(?,?,?,?,?)";
 			        conn.PrepararSentencias=conn.conexionBD.prepareStatement(NuevoSt);
 			        conn.PrepararSentencias.setString(1,null);
 			        conn.PrepararSentencias.setString(2,txtNombreProject.getText());
+			        nombreproject =txtNombreProject.getText();
 			        conn.PrepararSentencias.setString(3,PathProyecto);
 			        conn.PrepararSentencias.setString(4,txtProcessCenter.getText());
+			        ProcessCenter = txtProcessCenter.getText();
 			        conn.PrepararSentencias.setString(5,PathReportes);
-			        conn.PrepararSentencias.setString(6,DataProviderPath);
 			        conn.PrepararSentencias.executeUpdate();
 			        JOptionPane.showMessageDialog(null, "Nuevo Proyecto Creado");
 			        
+			        autoIncKeyFromFunc = -1;
+			        ResultSet rs= conn.consulta("SELECT LAST_INSERT_ID()");
+
+			        if (rs.next()) {
+			            autoIncKeyFromFunc = rs.getInt(1);
+			        } else {
+			            // throw an exception from here
+			        }
+			              
 			        CopiarAssets();
-			        
+
 			        cancelar();
+			        
+			        btnSiguiente = new JButton("Siguiente");
+					btnSiguiente.addActionListener(new ActionListener() {
+						public void actionPerformed(ActionEvent arg0) {
+							VarGlobals();
+							PageObjects siguiente = new PageObjects();
+							frame.setVisible(false);
+							siguiente.setVisible(true);
+
+						}
+					});
+					btnSiguiente.setBounds(385, 269, 89, 23);
+					contentPane.add(btnSiguiente);
+					btnSiguiente.setEnabled(true);
+			        
+			        SetExcel();
+			        RespaldoAExcel();
 			        
 			    } catch (Exception e) {
 			        System.out.println(e.getCause());
 			    }
+			    
+			    
+			    
+			    
 			}   
-		
+			
 
+		
 			}
 		});
-		btnCrearProyecto.setBounds(436, 245, 134, 23);
+		btnCrearProyecto.setBounds(438, 208, 134, 23);
 		contentPane.add(btnCrearProyecto);
 		
-		JButton btnPathReportes = new JButton("Set Path");
+		btnPathReportes = new JButton("Set Path");
 		btnPathReportes.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
@@ -247,43 +245,8 @@ public class Configuracion extends JFrame {
 		});
 		btnPathReportes.setBounds(481, 143, 89, 23);
 		contentPane.add(btnPathReportes);
-		
-		JLabel lblPathDeDataprovider = new JLabel("Path de DataProvider");
-		lblPathDeDataprovider.setFont(new Font("Arial Narrow", Font.BOLD, 14));
-		lblPathDeDataprovider.setBounds(106, 175, 119, 22);
-		contentPane.add(lblPathDeDataprovider);
-		
-		txtDataProvider = new JTextField();
-		txtDataProvider.setEnabled(false);
-		txtDataProvider.setColumns(10);
-		txtDataProvider.setBounds(229, 177, 245, 23);
-		contentPane.add(txtDataProvider);
-		
-		JButton btnDataProvider = new JButton("Set Path");
-		btnDataProvider.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				
-				JFileChooser chooser = new JFileChooser();
-				FileNameExtensionFilter filter = new FileNameExtensionFilter("EXCEL FILES", "xlsx", "xls");
-				chooser.setFileFilter(filter);
-			    chooser.setCurrentDirectory(new java.io.File("."));
-			    chooser.setDialogTitle("Seleccionar Path");
-			    chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
-			    chooser.setAcceptAllFileFilterUsed(false);
-
-			    if (chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
-			      txtDataProvider.setText(String.valueOf(chooser.getSelectedFile()));
-			      DataProviderPath=String.valueOf(chooser.getSelectedFile());
-			      DataProviderPath= PathReportes.replace("\\", "\\\\");
 	
-			    } else {
-			    	JOptionPane.showMessageDialog(null,"Debes seleccionar un directorio","",JOptionPane.PLAIN_MESSAGE);
-			    }
-			  }
-			
-		});
-		btnDataProvider.setBounds(481, 177, 89, 23);
-		contentPane.add(btnDataProvider);
+		
 	}
 	
 	public void cancelar()
@@ -292,10 +255,19 @@ public class Configuracion extends JFrame {
 		txtPath.setText("");
 		txtProcessCenter.setText("");
 		txtPathreportes.setText("");
-		txtDataProvider.setText("");
+		
+		txtNombreProject.setEnabled(false);
+		txtPath.setEnabled(false);
+		txtProcessCenter.setEnabled(false);
+		txtPathreportes.setEnabled(false);
+		
+		btnSetPathProyecto.setEnabled(false);
+		btnPathReportes.setEnabled(false);
+		btnCrearProyecto.setEnabled(false);
 		
 	}
 	
+
 
 	    public void ComprobarDirectorio()
 	    {
@@ -322,11 +294,82 @@ public class Configuracion extends JFrame {
 			File dest = new File(PathProyecto);
 			try {
 			    FileUtils.copyDirectory(source, dest);
-			    
+
 			    
 			} catch (IOException e) {
 			    e.printStackTrace();
+			    
 			}
 	    	
 	    }
+	    
+	    
+	    public void VarGlobals(){
+	    	
+	    	VarGlobals VariableGlobal = new VarGlobals();
+	    	VariableGlobal.idProject= String.valueOf(autoIncKeyFromFunc);
+		    VariableGlobal.PathProyecto= PathProyecto;
+		    VariableGlobal.PathReportes=PathReportes;
+		    VariableGlobal.ProcessCenter= ProcessCenter;
+		    VariableGlobal.nombreproject= nombreproject;	
+	    	
+		    System.out.println(VariableGlobal.idProject);
+		    System.out.println(VariableGlobal.PathProyecto);
+		    System.out.println(VariableGlobal.PathReportes);
+		    System.out.println(VariableGlobal.ProcessCenter);
+		    System.out.println(VariableGlobal.nombreproject);
+		    
+
+	    }
+	    
+	    
+	    public void SetExcel(){
+	    	
+			// Inicializar Excel
+			ExcelPath = PathProyecto + "\\DataProvider\\inputData.xlsx";
+			String configuracion= "config";
+			try {
+				EscribirConfig = new ExcelDataConfig(ExcelPath);
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+				
+			}
+			
+			try {
+				EscribirConfig.WriteConfig(configuracion, 1, 1, String.valueOf(autoIncKeyFromFunc));
+				EscribirConfig.WriteConfig(configuracion, 2, 1, nombreproject);
+				EscribirConfig.WriteConfig(configuracion, 3, 1, PathProyecto);
+				EscribirConfig.WriteConfig(configuracion, 4, 1, PathReportes);
+				EscribirConfig.WriteConfig(configuracion, 5, 1, ProcessCenter);
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+	    }
+	    
+	    public void RespaldoAExcel(){
+	    	
+			// Inicializar Excel
+	    	ExcelPath = "C:\\workspace\\Repo\\DataProvider\\inputData.xlsx";
+			String configuracion= "config";
+			try {
+				EscribirConfig = new ExcelDataConfig(ExcelPath);
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+				
+			}
+			
+			try {
+				EscribirConfig.WriteConfig(configuracion, 1, 1, String.valueOf(autoIncKeyFromFunc));
+				EscribirConfig.WriteConfig(configuracion, 2, 1, nombreproject);
+				EscribirConfig.WriteConfig(configuracion, 3, 1, PathProyecto);
+				EscribirConfig.WriteConfig(configuracion, 4, 1, PathReportes);
+				EscribirConfig.WriteConfig(configuracion, 5, 1, ProcessCenter);
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+	    }	
+	    
+	    
 }

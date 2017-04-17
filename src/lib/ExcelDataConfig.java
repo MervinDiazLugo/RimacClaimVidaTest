@@ -15,6 +15,7 @@ public class ExcelDataConfig {
 	XSSFWorkbook wb;
 	XSSFSheet sheet1;
 	File src;
+	public String configuracion="config";
 	
 	public ExcelDataConfig(String ExcelPath) throws FileNotFoundException{
 		
@@ -60,6 +61,27 @@ public void WriteData(int sheetNumber, int row, int colunm, String Msj) throws I
 		FileOutputStream fout = new FileOutputStream(src);
 		wb.write(fout);
 
+	
+}
+
+public void WriteConfig(String configuracion, int row, int colunm, String Msj) throws IOException{
+	
+
+	sheet1 = wb.getSheet(configuracion);
+	sheet1.getRow(row).createCell(colunm).setCellValue(Msj);
+	FileOutputStream fout = new FileOutputStream(src);
+	wb.write(fout);
+
+
+}
+
+public String GetConfig(String configuracion, int row, int colunm){
+	
+	sheet1 = wb.getSheet(configuracion);
+	
+	String data=sheet1.getRow(row).getCell(colunm).getStringCellValue();
+	
+	return data;
 	
 }
 
