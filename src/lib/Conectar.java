@@ -4,11 +4,13 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
+
 import java.sql.SQLException;
 import java.sql.Statement;
 
 import javax.swing.table.DefaultTableModel;
+
+import com.mysql.jdbc.ResultSetMetaData;
 
 public class Conectar {
     public Connection conexionBD;
@@ -60,38 +62,40 @@ public class Conectar {
       }
 
   }
-  
-public DefaultTableModel RetornarDatos (String SentenciaSQL) throws SQLException //DefaultTableModel temporal que se crea al momento de  ejecutar el siguiente codigo, almacena los registros que vamos a consu1tar
-{
-DefaultTableModel Modelo= new DefaultTableModel();
-{
-    try {
-        ResultSet RsFormulario= consulta(SentenciaSQL); // crear el resultset que nos hará la consulta sql de nuestro formulario
-        ResultSetMetaData metadatos= RsFormulario.getMetaData();// crear resultset para recorrer los registros de la tabla resultante
-        int NumeroColumnas= metadatos.getColumnCount();
-        Object [] etiquetas= new Object [NumeroColumnas];
-        for(int i = 0; i < NumeroColumnas; i++) {
-            etiquetas [i]= metadatos.getColumnLabel(i+1); //arreglo para costruir la cantidad de columnas y filas de la tabla
-                    
-        }
-        Modelo.setColumnIdentifiers(etiquetas);
-        while (RsFormulario.next()) {            
-            Object[] DatosFila= new Object[Modelo.getColumnCount()];
-        
-        for(int i = 0; i < Modelo.getColumnCount(); i++) {
-            DatosFila[i]=RsFormulario.getObject(i+1);
-        }
-        Modelo.addRow(DatosFila);
-        }
-    } catch (Exception e) {
-        
-        System.out.println(e.getMessage());
-    }
-     return Modelo; //retorna de esta funcion el resultado de registros en una tabla que vamos a llamar a traves del formulario
-}
-
-}
  
+    //DefaultTableModel temporal que se crea al momento de  ejecutar el siguiente codigo, almacena los registros que vamos a consu1tar
+public DefaultTableModel RetornarDatos (String SentenciaSQL) throws SQLException 
+	{
+		DefaultTableModel Modelo = new DefaultTableModel();
+		{
+			try {
+				ResultSet RsFormulario = consulta(SentenciaSQL);
+				ResultSetMetaData metadatos = (ResultSetMetaData) RsFormulario.getMetaData();
+				int NumeroColumnas = metadatos.getColumnCount();
+				Object[] etiquetas = new Object[NumeroColumnas];
+				for (int i = 0; i < NumeroColumnas; i++) {
+					etiquetas[i] = metadatos.getColumnLabel(i + 1); 
+
+				}
+				Modelo.setColumnIdentifiers(etiquetas);
+				while (RsFormulario.next()) {
+					Object[] DatosFila = new Object[Modelo.getColumnCount()];
+
+					for (int i = 0; i < Modelo.getColumnCount(); i++) {
+						DatosFila[i] = RsFormulario.getObject(i + 1);
+					}
+					Modelo.addRow(DatosFila);
+				}
+			} catch (Exception e) {
+
+				System.out.println(e.getMessage());
+			}
+			return Modelo; // retorna de esta funcion el resultado de registros
+							// en una tabla que vamos a llamar a traves del
+							// formulario
+		}
+
+	}
 
 }
 
