@@ -57,6 +57,9 @@ import javax.swing.JMenu;
 import java.awt.SystemColor;
 import javax.swing.UIManager;
 import java.awt.Insets;
+import java.awt.Component;
+import javax.swing.Box;
+import javax.swing.border.LineBorder;
 
 public class PageObjects extends JFrame {
 
@@ -70,18 +73,23 @@ public class PageObjects extends JFrame {
 	public JTextField txtWebElement;
 	public JTextField txtObjectName;
 	public JTextField txtIdPage;
-	private JTextField txtPrefix;
-	JComboBox<String> txtPageName = new JComboBox<String>();
-	JComboBox<String> txtObjectType = new JComboBox<String>();
-	static PageObjects frame;
+	public JTextField txtPrefix;
+	public JTextField txtDataProviderID;
+	public JTextField txtValueProvider;
+	public JTable tabladatos1;
 	JButton btnTerminar;
 	JButton btnEmpezar;
 	JButton btnAgregar;
-	int autoIncKeyFromFunc, autoIncKeyFromPage, Id_proyecto;
-	String ListProject, nuevaPO, Id_page, Id_Object, ObjectType, WebElement, ObjectName, PathProject;
-	int estado;
-	private JTable tabladatos1;
+	JComboBox<String> txtPageName = new JComboBox<String>();
+	JComboBox<String> txtObjectType = new JComboBox<String>();
+	JComboBox<String> txtObjectsNamesProvider= new JComboBox<String>();
+	static PageObjects frame;
+	int autoIncKeyFromFunc, autoIncKeyFromPage, Id_proyecto, autoIncKeyFromProvider, estado;
+	String ListProject, nuevaPO, Id_page, Id_Object, ObjectType, WebElement, ObjectName, PathProject, Objects;
+	String tableDataProviderID, tableObjectsNamesProvider, tableValueProvider, tableId_page;
 	PrintWriter writer;
+	private JTable TablaDataProvider;
+
 	
 	/**
 	 * Launch the application.
@@ -93,7 +101,7 @@ public class PageObjects extends JFrame {
 				try {
 				    frame = new PageObjects();
 					frame.setVisible(true);
-					//frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+					frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -132,17 +140,25 @@ public class PageObjects extends JFrame {
 						Id_proyecto= Integer.valueOf(VarGlobals.idProject);
 						
 						Conectar conn = new Conectar();
-						String cons="SELECT COUNT(*) AS rowcount FROM paginas";
+						String cons="SELECT id_page AS rowcount FROM paginas";
 						ResultSet rs=conn.consulta(cons);
-						rs.next();
-						autoIncKeyFromFunc = rs.getInt("rowcount")+1;
-						txtIdPage.setText(String.valueOf(autoIncKeyFromFunc));
+						
+						while (rs.next()) {
+							autoIncKeyFromFunc = rs.getInt("rowcount");
+							System.out.println(rs.getInt("rowcount"));
+						}
+						
+						
+						txtIdPage.setText(String.valueOf(autoIncKeyFromFunc+1));
 						
 						
 						Cargar_id_paginas();
 						Cargar_id_WebElements();
 						table();
 						DesactivarObjetos();
+						cargarObjectNamesProvider();
+						DataProviderTable();
+						CargarIdDataProvider();
 				        
 						
 					} catch (Exception f) {
@@ -164,17 +180,23 @@ public class PageObjects extends JFrame {
 						Id_proyecto= Integer.valueOf(txtIdProject.getText());
 						
 						Conectar conn = new Conectar();
-						String cons="SELECT COUNT(*) AS rowcount FROM paginas";
+						String cons="SELECT id_page AS rowcount FROM paginas";
 						ResultSet rs=conn.consulta(cons);
-						rs.next();
-						autoIncKeyFromFunc = rs.getInt("rowcount")+1;
-						txtIdPage.setText(String.valueOf(autoIncKeyFromFunc));
+						
+						while (rs.next()) {
+							autoIncKeyFromFunc = rs.getInt("rowcount");
+						}
+						
+						txtIdPage.setText(String.valueOf(autoIncKeyFromFunc+1));
 						
 						
 						Cargar_id_paginas();
 						Cargar_id_WebElements();
 						table();
 						DesactivarObjetos();
+						cargarObjectNamesProvider();
+						DataProviderTable();
+						CargarIdDataProvider();
 				        
 					} catch (Exception f) {
 						System.out.println(f.getMessage());
@@ -187,7 +209,7 @@ public class PageObjects extends JFrame {
 			}
 		});
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(0, 11, 794, 641);
+		setBounds(0, 11, 1240, 601);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(230, 230, 250));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -221,12 +243,11 @@ public class PageObjects extends JFrame {
 						txtWebElement.setText("");
 						txtObjectName.setText("");
 						ContadorObjetos();
+						cargarObjectNamesProvider();
+						CargarIdDataProvider();
 						JOptionPane.showMessageDialog(null, "Se ha agregado el webElement", null, JOptionPane.PLAIN_MESSAGE);
 						table();
 						
-						
-						
-						//JOptionPane.showMessageDialog(null, "Se ha creado la nueva Page Objects", "",JOptionPane.PLAIN_MESSAGE);
 						
 					} catch (HeadlessException e) {
 
@@ -401,11 +422,14 @@ public class PageObjects extends JFrame {
 							txtPrefix.setEditable(false);
 							txtPageName.setEnabled(false);
 
-							cargarNameItems();
-
+							Id_page=txtIdPage.getText();
 							btnEmpezar.setVisible(false);
 							btnTerminar.setVisible(true);
 							ActivarObjetos();
+							cargarNameItems();
+							table();
+							cargarObjectNamesProvider();
+							DataProviderTable();
 						} else {
 
 						}
@@ -433,24 +457,6 @@ public class PageObjects extends JFrame {
 		txtPrefix.setColumns(10);
 		txtPrefix.setBounds(188, 222, 58, 20);
 		contentPane.add(txtPrefix);
-		
-		btnTerminar = new JButton("Terminar");
-		btnTerminar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				
-				txtIdPage.setEditable(true);
-				txtPageName.setEnabled(true);
-				txtPrefix.setEditable(true);
-				
-				btnEmpezar.setVisible(true);
-		        btnTerminar.setVisible(false);
-		        DesactivarObjetos();
-
-
-			}
-		});
-		btnTerminar.setBounds(599, 221, 89, 23);
-		contentPane.add(btnTerminar);
 				
 		btnEmpezar = new JButton("Empezar");
 		btnEmpezar.addActionListener(new ActionListener() {
@@ -489,9 +495,12 @@ public class PageObjects extends JFrame {
 							txtPageName.setEnabled(false);
 							
 							estado=1;
-							cargarNameProjects();
+
 							ActivarObjetos();
-							
+							cargarNameItems();
+							table();
+							cargarObjectNamesProvider();
+							DataProviderTable();
 							
 							txtPageName.addItem(mostrar);	
 							txtPageName.setSelectedItem(mostrar);
@@ -521,7 +530,25 @@ public class PageObjects extends JFrame {
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.addMouseListener(new MouseAdapter() {
 		});
-		scrollPane.setBounds(10, 330, 757, 192);
+		
+		btnTerminar = new JButton("Terminar");
+		btnTerminar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				txtIdPage.setEditable(true);
+				txtPageName.setEnabled(true);
+				txtPrefix.setEditable(true);
+				
+				btnEmpezar.setVisible(true);
+		        btnTerminar.setVisible(false);
+		        DesactivarObjetos();
+
+
+			}
+		});
+		btnTerminar.setBounds(599, 221, 89, 23);
+		contentPane.add(btnTerminar);
+		scrollPane.setBounds(26, 305, 741, 192);
 		contentPane.add(scrollPane);
 		
 		tabladatos1 = new JTable();
@@ -641,13 +668,13 @@ public class PageObjects extends JFrame {
 				
 			}
 		});
-		btnConstruir.setBounds(678, 533, 89, 23);
+		btnConstruir.setBounds(678, 508, 89, 23);
 		contentPane.add(btnConstruir);
 		
 		JMenuBar menuBar = new JMenuBar();
 		menuBar.setMargin(new Insets(1, 1, 1, 1));
 		menuBar.setBackground(new Color(255, 255, 255));
-		menuBar.setBounds(0, 0, 778, 23);
+		menuBar.setBounds(0, 0, 1374, 23);
 		contentPane.add(menuBar);
 		
 		JMenu mnNewMenu = new JMenu("Test Cases");
@@ -667,6 +694,153 @@ public class PageObjects extends JFrame {
 			}
 		});
 		mnNewMenu.add(mntmNewMenuItem);
+		
+		JLabel lblDefinirDataProviders = new JLabel("Definir Data Providers");
+		lblDefinirDataProviders.setFont(new Font("Arial Narrow", Font.BOLD, 16));
+		lblDefinirDataProviders.setBounds(947, 67, 138, 22);
+		contentPane.add(lblDefinirDataProviders);
+		
+		txtDataProviderID = new JTextField();
+		txtDataProviderID.setEditable(false);
+		txtDataProviderID.setColumns(10);
+		txtDataProviderID.setBounds(903, 116, 63, 20);
+		contentPane.add(txtDataProviderID);
+		
+		JLabel lblDataProviderId = new JLabel("ID");
+		lblDataProviderId.setFont(new Font("Arial Narrow", Font.BOLD, 14));
+		lblDataProviderId.setBounds(863, 116, 35, 22);
+		contentPane.add(lblDataProviderId);
+		
+		JLabel label_5 = new JLabel("Object Name");
+		label_5.setFont(new Font("Arial Narrow", Font.BOLD, 14));
+		label_5.setBounds(827, 137, 86, 22);
+		contentPane.add(label_5);
+		
+		JLabel lblValor = new JLabel("Value");
+		lblValor.setFont(new Font("Arial Narrow", Font.BOLD, 14));
+		lblValor.setBounds(844, 170, 81, 22);
+		contentPane.add(lblValor);
+		
+		txtValueProvider = new JTextField();
+		txtValueProvider.setColumns(10);
+		txtValueProvider.setBounds(903, 173, 311, 20);
+		contentPane.add(txtValueProvider);
+		
+		txtObjectsNamesProvider.setBounds(903, 140, 311, 20);
+		contentPane.add(txtObjectsNamesProvider);
+		
+		JButton btnDataprovider = new JButton("Provide");
+		btnDataprovider.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int respuesta = JOptionPane.showOptionDialog(null,"Guardar esta Variable, ¿Desea Continuar?", "Data Provider", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, null, null, null);
+				if(respuesta == 0 ){
+					Objects = (String) txtObjectsNamesProvider.getSelectedItem();
+					
+					if (txtDataProviderID.getText().equals("") || txtValueProvider.getText().equals("") || Objects==null)
+					{
+						
+						JOptionPane.showMessageDialog(null, "Debe completar todos los campos", "", JOptionPane.PLAIN_MESSAGE);
+						
+					}else 
+					{
+						try {
+							Conectar conn = new Conectar();
+							String NuevoSt = "insert into provider values(?,?,?,?,?)";
+							conn.PrepararSentencias = conn.conexionBD.prepareStatement(NuevoSt);
+							conn.PrepararSentencias.setString(1, null);
+							conn.PrepararSentencias.setInt (2, Id_proyecto);
+							conn.PrepararSentencias.setInt (3, Integer.valueOf(Id_page));
+							conn.PrepararSentencias.setString(4, Objects);
+							conn.PrepararSentencias.setString(5, txtValueProvider.getText());
+							conn.PrepararSentencias.executeUpdate();
+							txtDataProviderID.setText("");
+							txtValueProvider.setText("");
+							
+							CargarIdDataProvider();
+							DataProviderTable();
+							//JOptionPane.showMessageDialog(null, "Se ha cargado la variable al Data provider", null, JOptionPane.PLAIN_MESSAGE);
+							
+						}catch (Exception e1) {
+							e1.printStackTrace();
+						}
+						
+					}
+					
+				}else{
+					
+					
+				}
+			}
+		});
+		btnDataprovider.setBounds(1125, 207, 89, 23);
+		contentPane.add(btnDataprovider);
+		
+		JScrollPane scrollPane_1 = new JScrollPane();
+		scrollPane_1.setBounds(827, 239, 495, 262);
+		contentPane.add(scrollPane_1);
+		
+		TablaDataProvider = new JTable();
+		TablaDataProvider.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent arg0) {
+				
+				tableDataProviderID=		TablaDataProvider.getValueAt(TablaDataProvider.getSelectedRow(), 0).toString();
+				tableId_page=				TablaDataProvider.getValueAt(TablaDataProvider.getSelectedRow(), 1).toString();
+				tableObjectsNamesProvider= 	TablaDataProvider.getValueAt(TablaDataProvider.getSelectedRow(), 2).toString();
+				tableValueProvider=			TablaDataProvider.getValueAt(TablaDataProvider.getSelectedRow(), 3).toString();
+				
+				
+				if(arg0.getKeyCode() == KeyEvent.VK_ENTER) {	
+				
+	                try {
+	                    Conectar conn = new Conectar();
+	                    String SentenciaModificar="update provider set id_page=?, nameProvider=?,value=? where id_provider="+tableDataProviderID+" And id_project="+Id_proyecto;
+	                    System.out.println(SentenciaModificar);
+	                    conn.PrepararSentencias=conn.conexionBD.prepareStatement(SentenciaModificar);
+	                    
+	                    conn.PrepararSentencias.setString(1,tableId_page);
+	                    conn.PrepararSentencias.setString(2,tableObjectsNamesProvider);
+	                    conn.PrepararSentencias.setString(3,tableValueProvider);
+	                    
+	                    conn.PrepararSentencias.executeUpdate();
+	                    JOptionPane.showMessageDialog(null, "Registro Actualizado");
+	                    
+	                    DataProviderTable();
+
+	                    
+	                } catch (Exception e) {
+	                    System.out.println(e.getCause());
+	                }
+				}
+				
+				if(arg0.getKeyCode() == KeyEvent.VK_DELETE) {	
+					
+					int respuesta= JOptionPane.showConfirmDialog(null, "Esto Borrará el registro, ¿Desea Eliminarlo?", "Confirmar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+					 if(respuesta==0){
+					    try {
+					        Conectar MiConexion = new Conectar();
+					        String SentenciaEliminar="Delete from provider where id_provider="+tableDataProviderID;
+					        MiConexion.PrepararSentencias=MiConexion.conexionBD.prepareStatement(SentenciaEliminar);
+					        MiConexion.PrepararSentencias.executeUpdate();
+					        JOptionPane.showMessageDialog(null, "Data Provider Eliminado");
+					        DataProviderTable();
+					        
+					    } catch (Exception e) {
+					        System.out.println(e.getCause());
+					    }  
+					
+				}
+			}
+		}
+		});
+		TablaDataProvider.setModel(new DefaultTableModel(
+			new Object[][] {
+			},
+			new String[] {
+				"Data Provider"
+			}
+		));
+		scrollPane_1.setViewportView(TablaDataProvider);
 
 	}
 	
@@ -683,13 +857,54 @@ public class PageObjects extends JFrame {
 				txtPageName.addItem(rs.getString("PageName"));
 			}
 		
-
+		
 		} catch (SQLException ex) {
 			ex.getMessage();
 			
 		}
 
 		}
+	
+	public void cargarObjectNamesProvider() throws ClassNotFoundException, SQLException{
+		
+		
+		try {
+			Conectar conn = new Conectar();
+			String cons="SELECT name FROM objects WHERE id_page=" + Id_page;
+	        ResultSet rs=conn.consulta(cons);
+			txtObjectsNamesProvider.removeAllItems();
+		while(rs.next())
+			{
+				txtObjectsNamesProvider.addItem(rs.getString("name"));
+			}
+			
+			rs.close();
+		
+		} catch (SQLException ex) {
+			ex.getMessage();
+			
+		}
+
+		
+	}
+	
+	public void CargarIdDataProvider(){
+		
+		try {
+			Conectar conn = new Conectar();
+			String cons="SELECT id_provider AS rowcount FROM provider";
+			ResultSet rs=conn.consulta(cons);
+			while (rs.next()) {
+				autoIncKeyFromProvider = rs.getInt("rowcount");
+				System.out.println(rs.getInt("rowcount"));
+			}
+			txtDataProviderID.setText(String.valueOf(autoIncKeyFromProvider+1));
+			
+			
+		} catch (Exception e) {
+			
+		}
+	}
 	
 	public void cargarNameItems() throws ClassNotFoundException, SQLException{
 
@@ -749,14 +964,10 @@ public void table(){
 			DefaultTableModel modelo = new DefaultTableModel();
 			tabladatos1.setModel(modelo);
 			
-			
-			//ocultar columnas
-
-			
 			DriverManager.registerDriver(new com.mysql.jdbc.Driver());
 			java.sql.Connection conexion = DriverManager.getConnection("jdbc:mysql://localhost/testautomationbpm","testers", "QaTest123!");
 			java.sql.Statement s = conexion.createStatement();
-			String SQL = "SELECT * FROM objects WHERE id_page=" + String.valueOf(Integer.valueOf(autoIncKeyFromPage)-1);
+			String SQL = "SELECT * FROM objects WHERE id_page=" + Id_page;
 			ResultSet rs = s.executeQuery(SQL);
 			ResultSetMetaData rsMd = (ResultSetMetaData) rs.getMetaData();
 			
@@ -816,6 +1027,68 @@ public void table(){
 		}
 
 	}
+
+
+public void DataProviderTable(){
+	
+	Id_page= txtIdPage.getText();
+	// Areglo para cargar datos a la tabla
+	try {
+
+		DefaultTableModel modelo2 = new DefaultTableModel();
+		TablaDataProvider.setModel(modelo2);
+		
+		DriverManager.registerDriver(new com.mysql.jdbc.Driver());
+		java.sql.Connection conexion = DriverManager.getConnection("jdbc:mysql://localhost/testautomationbpm","testers", "QaTest123!");
+		java.sql.Statement s = conexion.createStatement();
+		String SQL = "SELECT * FROM provider WHERE id_page=" + Id_page;
+		ResultSet rs = s.executeQuery(SQL);
+		ResultSetMetaData rsMd = (ResultSetMetaData) rs.getMetaData();
+		
+		int cantidadColumnas = rsMd.getColumnCount();
+		for (int i = 1; i <= cantidadColumnas; i++) {
+			modelo2.addColumn(rsMd.getColumnLabel(i));
+		}
+		
+		while (rs.next()) {
+			Object[] fila = new Object[cantidadColumnas];
+			for (int i = 0; i < cantidadColumnas; i++) {
+				fila[i] = rs.getObject(i + 1);
+			}
+			modelo2.addRow(fila);
+			
+		}
+		
+		//Formatear Tabla
+		TableColumnModel tcm2 = TablaDataProvider.getColumnModel();
+		tcm2.removeColumn(tcm2.getColumn(1));
+		
+		tcm2.getColumn(0).setHeaderValue("ID Provider");
+		tcm2.getColumn(0).setMinWidth(5);
+		tcm2.getColumn(0).setMaxWidth(70);
+		tcm2.getColumn(0).setPreferredWidth(70);
+		tcm2.getColumn(0).setWidth(70);
+		
+		tcm2.getColumn(1).setHeaderValue("ID Page");
+		tcm2.getColumn(1).setMinWidth(5);
+		tcm2.getColumn(1).setMaxWidth(70);
+		tcm2.getColumn(1).setPreferredWidth(70);
+		tcm2.getColumn(1).setWidth(70);
+		
+		tcm2.getColumn(2).setHeaderValue("Name");
+		tcm2.getColumn(2).setMinWidth(5);
+		tcm2.getColumn(2).setMaxWidth(150);
+		tcm2.getColumn(2).setPreferredWidth(150);
+		tcm2.getColumn(2).setWidth(150);
+		
+		tcm2.getColumn(3).setHeaderValue("Valor");
+		
+		rs.close();
+		conexion.close();
+	} catch (Exception ex) {
+	}
+	
+}
 
 public void ContadorObjetos() throws ClassNotFoundException, SQLException{
 	
